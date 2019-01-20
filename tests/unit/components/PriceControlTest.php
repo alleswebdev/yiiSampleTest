@@ -2,7 +2,7 @@
 
 namespace tests\components;
 
-use app\components\PriseControl;
+use app\components\PriceControl;
 
 class PriceControlTest extends \Codeception\Test\Unit
 {
@@ -12,7 +12,7 @@ class PriceControlTest extends \Codeception\Test\Unit
      */
     public function testOnExceptionInit($tolerance, $currentPrice, $previousPrice, $amount)
     {
-        new PriseControl([
+        new PriceControl([
             'tolerance' => $tolerance,
             'currentPrice' => $currentPrice,
             'previousPrice' => $previousPrice,
@@ -25,7 +25,7 @@ class PriceControlTest extends \Codeception\Test\Unit
      */
     public function testDiff($tolerance, $currentPrice, $previousPrice)
     {
-        $obj = new PriseControl([
+        $obj = new PriceControl([
             'tolerance' => $tolerance,
             'currentPrice' => $currentPrice,
             'previousPrice' => $previousPrice,
@@ -39,7 +39,7 @@ class PriceControlTest extends \Codeception\Test\Unit
      */
     public function testInvalidDiff($tolerance, $currentPrice, $previousPrice)
     {
-        $obj = new PriseControl([
+        $obj = new PriceControl([
             'tolerance' => $tolerance,
             'currentPrice' => $currentPrice,
             'previousPrice' => $previousPrice,
@@ -53,7 +53,7 @@ class PriceControlTest extends \Codeception\Test\Unit
      */
     public function testAmount($tolerance, $currentPrice, $previousPrice, $amount)
     {
-        $obj = new PriseControl([
+        $obj = new PriceControl([
             'tolerance' => $tolerance,
             'currentPrice' => $currentPrice,
             'previousPrice' => $previousPrice,
@@ -64,7 +64,7 @@ class PriceControlTest extends \Codeception\Test\Unit
 
     public function testInvalideAmount()
     {
-        $obj = new PriseControl([
+        $obj = new PriceControl([
             'tolerance' => 15,
             'currentPrice' => 1000,
             'previousPrice' => 1500,
@@ -72,6 +72,41 @@ class PriceControlTest extends \Codeception\Test\Unit
 
         //amout == 33
         $this->assertNotEquals($obj->amount, 35);
+    }
+
+    public function testSpecificAmount()
+    {
+        $obj = new PriceControl([
+            'tolerance' => 20,
+            'currentPrice' => 1000,
+            'previousPrice' => 1200,
+        ]);
+
+        $this->assertTrue($obj->diff());
+        $this->assertEquals($obj->amount, 16);
+    }
+
+    public function testSpecific2Amount()
+    {
+        $obj = new PriceControl([
+            'tolerance' => 5,
+            'currentPrice' => 1000,
+        ]);
+
+        $this->assertTrue($obj->diff());
+        $this->assertEquals($obj->amount, 0);
+    }
+
+    public function testSpecific3Amount()
+    {
+        $obj = new PriceControl([
+            'tolerance' => 5,
+            'currentPrice' => 1000,
+            'amount' => 15,
+        ]);
+
+        $this->assertFalse($obj->diff());
+        $this->assertEquals($obj->amount, 15);
     }
 
     public function initInvalidProvider()
