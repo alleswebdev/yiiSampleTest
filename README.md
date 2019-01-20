@@ -50,26 +50,25 @@
         'previousPrice' => 1200, // предыдущая цена
     ]);
   
-       //определит допустимо ли отклонение
-       $obj->diff(); // текущая цена отклоняется от предыдущей на 17% - вернёт false
-       //текущее отклонение
-       $obj->amount; // = 17%
-       
-       
-       $obj = new PriceControl([
-               'tolerance' => 5, // допустимое отклонение - 5%
-               'currentPrice' => 1000, // текущая цена
-           ]);
-       
-       $obj->diff(); // true 5>0
-       $obj->amount; // 0
-       
-       $obj = new PriceControl([
-              'tolerance' => 5, // допустимое отклонение - 5%
-              'currentPrice' => 1000, // текущая цена
-              'amount' => 15, // текущая цена
-          ]);
-      
-      $obj->diff(); // false 5>15
-      $obj->amount; // 15
+    //определит допустимо ли отклонение
+    $obj->diff(); // текущая цена отклоняется от предыдущей на 16% - вернёт false
+    //текущее отклонение
+    $obj->amount; // = 16%
+    
+    $obj = new PriceControl([
+       'tolerance' => 5, // допустимое отклонение - 5%
+       'currentPrice' => 1000, // текущая цена
+    ]);
+    
+    $obj->diff(); // true 5>0
+    $obj->amount; // 0
+    
+    $obj = new PriceControl([
+      'tolerance' => 5, // допустимое отклонение - 5%
+      'currentPrice' => 1000, // текущая цена
+      'amount' => 15, // текущая цена
+    ]);
+    
+    $obj->diff(); // false 5>15
+    $obj->amount; // 15
 ```
