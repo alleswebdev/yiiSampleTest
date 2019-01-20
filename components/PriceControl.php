@@ -6,9 +6,9 @@ use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 
 /**
- * Class PriseControl
+ * Class PriceControl
  *
- *     $obj = new PriseControl([
+ *     $obj = new PriceControl([
  *       'tolerance' => 5,
  *       'currentPrice' => 1000,
  *       'previousPrice' => 1200,
@@ -21,7 +21,7 @@ use yii\base\InvalidArgumentException;
  *
  * @package app\components
  */
-class PriseControl extends BaseObject
+class PriceControl extends BaseObject
 {
     /**
      * @var int
