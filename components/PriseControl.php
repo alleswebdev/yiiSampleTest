@@ -11,7 +11,7 @@ use yii\base\InvalidArgumentException;
  *     $obj = new PriseControl([
  *       'tolerance' => 5,
  *       'currentPrice' => 1000,
- *      'previousPrice' => 1200,
+ *       'previousPrice' => 1200,
  *     ]);
  *
  *     определит допустимо ли отклонение

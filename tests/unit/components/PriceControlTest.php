@@ -181,3 +181,4 @@ class PriceControlTest extends \Codeception\Test\Unit
         ];
     }
 }
+
