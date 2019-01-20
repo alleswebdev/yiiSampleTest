@@ -9,6 +9,10 @@ nbproject
 .project
 .settings
 
+#apache
+error.log
+access.log
+
 # windows thumbnail cache
 Thumbs.db
 
