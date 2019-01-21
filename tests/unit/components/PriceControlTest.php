@@ -10,13 +10,12 @@ class PriceControlTest extends \Codeception\Test\Unit
      * @expectedException \yii\base\InvalidArgumentException
      * @dataProvider initInvalidProvider
      */
-    public function testOnExceptionInit($tolerance, $currentPrice, $previousPrice, $amount)
+    public function testOnExceptionInit($tolerance, $currentPrice, $previousPrice)
     {
         new PriceControl([
             'tolerance' => $tolerance,
             'currentPrice' => $currentPrice,
             'previousPrice' => $previousPrice,
-            'amount' => $amount,
         ]);
     }
 
@@ -83,7 +82,7 @@ class PriceControlTest extends \Codeception\Test\Unit
         ]);
 
         $this->assertTrue($obj->diff());
-        $this->assertEquals($obj->amount, 16);
+        $this->assertEquals($obj->amount, -16);
     }
 
     public function testSpecific2Amount()
@@ -100,41 +99,63 @@ class PriceControlTest extends \Codeception\Test\Unit
     public function testSpecific3Amount()
     {
         $obj = new PriceControl([
-            'tolerance' => 5,
-            'currentPrice' => 1000,
-            'amount' => 15,
+            'tolerance' => 20,
+            'currentPrice' => 1200,
+            'previousPrice' => 1000,
+        ]);
+
+        $this->assertTrue($obj->diff());
+        $this->assertEquals($obj->amount, 20);
+    }
+
+    public function testSpecific4Amount()
+    {
+        $obj = new PriceControl([
+            'tolerance' => 35,
+            'currentPrice' => 130,
+            'previousPrice' => 100,
+        ]);
+
+        $this->assertTrue($obj->diff());
+        $this->assertEquals($obj->amount, 30);
+    }
+
+    public function testDefaultTolerance()
+    {
+        $obj = new PriceControl([
+            'currentPrice' => 130,
+            'previousPrice' => 100,
         ]);
 
         $this->assertFalse($obj->diff());
-        $this->assertEquals($obj->amount, 15);
+        $this->assertEquals($obj->amount, 30);
+        $this->assertEquals($obj->tolerance, 10);
+    }
+
+    public function testDefaultTolerance2()
+    {
+        $obj = new PriceControl([
+            'currentPrice' => 110,
+            'previousPrice' => 100,
+        ]);
+
+        $this->assertTrue($obj->diff());
+        $this->assertEquals($obj->amount, 10);
+        $this->assertEquals($obj->tolerance, 10);
     }
 
     public function initInvalidProvider()
     {
         return [
             [
-                'tolerance' => 0,
-                'currentPrice' => 4,
-                'previousPrice' => 4,
-                'amount' => 0
-            ],
-            [
                 'tolerance' => 5,
                 'currentPrice' => 0,
                 'previousPrice' => 1,
-                'amount' => 1
             ],
             [
                 'tolerance' => 0,
                 'currentPrice' => 0,
                 'previousPrice' => 1,
-                'amount' => 0
-            ],
-            [
-                'tolerance' => 1,
-                'currentPrice' => 1,
-                'previousPrice' => 0,
-                'amount' => 5,
             ],
         ];
     }
@@ -146,7 +167,7 @@ class PriceControlTest extends \Codeception\Test\Unit
                 'tolerance' => 25,
                 'currentPrice' => 1000,
                 'previousPrice' => 1250,
-                'amount' => 20,
+                'amount' => -20,
             ],
             [
                 'tolerance' => 5,
@@ -158,7 +179,7 @@ class PriceControlTest extends \Codeception\Test\Unit
                 'tolerance' => 10,
                 'currentPrice' => 1140,
                 'previousPrice' => 1200,
-                'amount' => 5,
+                'amount' => -5,
             ],
             [
                 'tolerance' => 35,
