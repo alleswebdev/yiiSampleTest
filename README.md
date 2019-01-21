@@ -62,13 +62,5 @@
     
     $obj->diff(); // true 5>0
     $obj->amount; // 0
-    
-    $obj = new PriceControl([
-      'tolerance' => 5, // допустимое отклонение - 5%
-      'currentPrice' => 1000, // текущая цена
-      'amount' => 15, // текущая цена
-    ]);
-    
-    $obj->diff(); // false 5>15
-    $obj->amount; // 15
+   
 ```
